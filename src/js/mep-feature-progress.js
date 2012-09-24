@@ -42,6 +42,10 @@
 
 						// seek to where the mouse is
 						if (mouseIsDown) {
+							if (!media.paused) {
+								player.isSeeking = true;
+								media.pause();
+							}
 							media.setCurrentTime(newTime);
 						}
 
@@ -69,6 +73,10 @@
 								handleMouseMove(e);
 							})
 							.bind('mouseup.dur', function (e) {
+								if (player.isSeeking) {
+									player.isSeeking = false;
+									media.play();
+								}
 								mouseIsDown = false;
 								timefloat.hide();
 								$(document).unbind('.dur');
